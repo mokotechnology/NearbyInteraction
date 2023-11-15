@@ -1,0 +1,44 @@
+{
+  "name": "MKNearbyInteraction",
+  "version": "0.0.1",
+  "summary": "A short description of MKNearbyInteraction.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/lovexiaoxia/MKNearbyInteraction",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "lovexiaoxia": "aadyx2007@163.com"
+  },
+  "source": {
+    "git": "https://github.com/lovexiaoxia/MKNearbyInteraction.git",
+    "tag": "0.0.1"
+  },
+  "platforms": {
+    "ios": "15.0"
+  },
+  "source_files": "MKNearbyInteraction/Classes/**/*",
+  "resource_bundles": {
+    "MKNearbyInteraction": [
+      "MKNearbyInteraction/Assets/*"
+    ]
+  },
+  "dependencies": {
+    "MKBaseModuleLibrary": [
+
+    ],
+    "MKCustomUIModule": [
+
+    ],
+    "MKBaseBleModule": [
+
+    ],
+    "MLInputDodger": [
+
+    ],
+    "SVGKit": [
+
+    ]
+  }
+}

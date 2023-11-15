@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MKNearbyInteraction'
-  s.version          = '0.1.0'
+  s.version          = '0.0.1'
   s.summary          = 'A short description of MKNearbyInteraction.'
 
 # This description is used to generate tags and improve search results.
@@ -28,14 +28,22 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/lovexiaoxia/MKNearbyInteraction.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '15.0'
 
   s.source_files = 'MKNearbyInteraction/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'MKNearbyInteraction' => ['MKNearbyInteraction/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'MKNearbyInteraction' => ['MKNearbyInteraction/Assets/*']
+  }
 
+  s.dependency 'MKBaseModuleLibrary'
+  s.dependency 'MKCustomUIModule'
+  s.dependency 'MKBaseBleModule'
+  
+  s.dependency 'MLInputDodger'
+  
+  s.dependency 'SVGKit'
+  
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
