@@ -148,6 +148,8 @@ MKNBNearbyInteractionHeaderDelegate>
         [self.arView updateMatrix:SCNMatrix4FromMat4(transform)];
     }
     
+    NSLog(@"simd_float3 vector: (%f, %f, %f)", object.direction.x, object.direction.y, object.direction.z);
+    
     BOOL isDirectionEnable = NISession.deviceCapabilities.supportsDirectionMeasurement;
     
     double azimuthCheck = [self azimuth:object.direction];
@@ -415,7 +417,7 @@ MKNBNearbyInteractionHeaderDelegate>
     [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0.0f);
         make.right.mas_equalTo(0.0f);
-        make.top.mas_equalTo(defaultTopInset + 30);
+        make.top.mas_equalTo(self.view.mas_safeAreaLayoutGuideTop).mas_offset(30.f);
         make.height.mas_equalTo(150.f);
     }];
     [self.view addSubview:self.sceneView];

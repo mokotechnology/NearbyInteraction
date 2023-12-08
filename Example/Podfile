@@ -16,4 +16,19 @@ platform :ios,'15.0'
 
 target 'MKNearbyInteraction_Example' do
   pod 'MKNearbyInteraction', :path => '../'
+  
+  pod 'SDCycleScrollView','>= 1.82'
+  
+  pod 'MLInputDodger'
+  
+  pod 'SVGKit'
+  
+  pod 'SYNoticeBrowseLabel'
+  
+  pod 'MKBaseModuleLibrary'
+  
+  pod 'MKCustomUIModule'
+  
+  
+  
 end

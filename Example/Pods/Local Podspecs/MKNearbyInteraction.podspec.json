@@ -25,19 +25,7 @@
     ]
   },
   "dependencies": {
-    "MKBaseModuleLibrary": [
-
-    ],
-    "MKCustomUIModule": [
-
-    ],
     "MKBaseBleModule": [
-
-    ],
-    "MLInputDodger": [
-
-    ],
-    "SVGKit": [
 
     ]
   }

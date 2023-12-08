@@ -19,8 +19,6 @@
 NSString *const mk_nb_peripheralConnectStateChangedNotification = @"mk_nb_peripheralConnectStateChangedNotification";
 NSString *const mk_nb_centralManagerStateChangedNotification = @"mk_nb_centralManagerStateChangedNotification";
 
-NSString *const mk_nb_deviceDisconnectTypeNotification = @"mk_nb_deviceDisconnectTypeNotification";
-
 static MKNBCentralManager *manager = nil;
 static dispatch_once_t onceToken;
 
@@ -240,6 +238,7 @@ static dispatch_once_t onceToken;
     return @{
         @"rssi":rssi,
         @"peripheral":peripheral,
+        @"identify":peripheral.identifier.UUIDString,
         @"deviceName":(advDic[CBAdvertisementDataLocalNameKey] ? advDic[CBAdvertisementDataLocalNameKey] : @""),
         @"connectable":advDic[CBAdvertisementDataIsConnectable],
     };

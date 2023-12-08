@@ -36,13 +36,7 @@ TODO: Add long description of the pod here.
     'MKNearbyInteraction' => ['MKNearbyInteraction/Assets/*']
   }
 
-  s.dependency 'MKBaseModuleLibrary'
-  s.dependency 'MKCustomUIModule'
   s.dependency 'MKBaseBleModule'
-  
-  s.dependency 'MLInputDodger'
-  
-  s.dependency 'SVGKit'
   
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

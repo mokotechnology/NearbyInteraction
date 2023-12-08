@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class CBCentralManager,CBPeripheral;
 
+extern NSString *const mk_nb_peripheralConnectStateChangedNotification;
+
 @interface MKNBCentralManager : NSObject<MKBLEBaseCentralManagerProtocol>
 
 @property (nonatomic, weak)id <mk_nb_centralManagerScanDelegate>delegate;
