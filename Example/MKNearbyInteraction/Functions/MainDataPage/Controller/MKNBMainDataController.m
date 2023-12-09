@@ -77,12 +77,7 @@ mk_nb_accessorySharedDataDelegate>
 @property (nonatomic, strong)NINearbyAccessoryConfiguration *configuration;
 
 
-@property (nonatomic, strong)ARWorldTrackingConfiguration *arConfig;
-@property (nonatomic, strong)ARSession *arSession;
 
-
-
-@property (nonatomic, strong) AVAudioEngine *audioEngine;
 @property (nonatomic, strong) CHHapticEngine *hapticEngine;
 @property (nonatomic, assign) BOOL feedbackEnabled;
 @property (nonatomic, assign) NSInteger feedbackLevel;
@@ -97,7 +92,6 @@ mk_nb_accessorySharedDataDelegate>
 
 - (void)dealloc {
     NSLog(@"MKNBMainDataController销毁");
-    [self.arSession pause];
     [self.session invalidate];
     [self.hapticEngine stoppedHandler];
     [[MKNBCentralManager shared] sendData:stop];
@@ -197,7 +191,7 @@ mk_nb_accessorySharedDataDelegate>
         self.dataView.distanceLabel.text = @"Nearby";
         return;
     }
-    
+    [self setFeedbackLvlWithDistance:distance];
     self.dataView.errorView.hidden = YES;
     self.dataView.degreeView.hidden = NO;
     
@@ -208,8 +202,6 @@ mk_nb_accessorySharedDataDelegate>
         self.dataView.circleView.hidden = YES;
         self.dataView.arrowView.hidden = NO;
     }
-    
-    NSLog(@"%.1f",distance);
     
     BOOL isDirectionEnable = NISession.deviceCapabilities.supportsDirectionMeasurement;
     
@@ -244,14 +236,19 @@ mk_nb_accessorySharedDataDelegate>
         self.dataView.distanceLabel.hidden = NO;
         self.dataView.distanceLabel.text = @"Nearby";
     }else {
-        self.feedbackEnabled = NO;
-        
         self.dataView.distanceLabel.hidden = YES;
         
         self.dataView.distanceValueLabel.hidden = NO;
         self.dataView.distanceValueLabel.text = [NSString stringWithFormat:@"%.1f m",distance];
         
         CGFloat radians = (CGFloat)azimuth * (M_PI / 180);
+        
+        NSLog(@"%.1f",radians);
+        if (radians >= -0.2 && radians <= 0.2) {
+            self.feedbackEnabled = YES;
+        }else {
+            self.feedbackEnabled = NO;
+        }
         [self.dataView.arrowView setArrowRotationAngle:radians];
     }
 }
@@ -354,7 +351,6 @@ mk_nb_accessorySharedDataDelegate>
     
     self.session = [[NISession alloc] init];
     self.session.delegate = self;
-    [self.session setARSession:self.arSession];
     [self.session runWithConfiguration:self.configuration];
 }
 
@@ -379,11 +375,11 @@ mk_nb_accessorySharedDataDelegate>
     }
     self.timerIndex = 0;
         
-        // Play sound, if enabled
-        SystemSoundID systemSoundID = 1052;
-        AudioServicesPlaySystemSound(systemSoundID);
-        
-        // Play haptic, if enabled
+    // Play sound, if enabled
+    SystemSoundID systemSoundID = 1052;
+    AudioServicesPlaySystemSound(systemSoundID);
+    
+    // Play haptic, if enabled
     if (!self.hapticEngine || ![CHHapticEngine capabilitiesForHardware].supportsHaptics) {
         return;
     }
@@ -411,9 +407,9 @@ mk_nb_accessorySharedDataDelegate>
 }
 
 - (void)setFeedbackLvlWithDistance:(float)distance {
-    if (distance > 4.0) {
+    if (distance > 0.1) {
         self.feedbackLevel = 0;
-    } else if (distance > 2.0) {
+    } else if (distance > 0.03) {
         self.feedbackLevel = 1;
     } else {
         self.feedbackLevel = 2;
@@ -532,13 +528,6 @@ mk_nb_accessorySharedDataDelegate>
     return _dataView;
 }
 
-- (AVAudioEngine *)audioEngine {
-    if (!_audioEngine) {
-        _audioEngine = [[AVAudioEngine alloc] init];
-    }
-    return _audioEngine;
-}
-
 - (CHHapticEngine *)hapticEngine {
     if (!_hapticEngine) {
         _hapticEngine = [[CHHapticEngine alloc] initAndReturnError:nil];
@@ -558,27 +547,6 @@ mk_nb_accessorySharedDataDelegate>
                          @{@"hummDuration": @0.1, @"timerIndexRef": @1}];
     }
     return _feedbackPar;
-}
-
-- (ARWorldTrackingConfiguration *)arConfig {
-    if (!_arConfig) {
-        _arConfig = [[ARWorldTrackingConfiguration alloc] init];
-        // 设置/开始AR会话，为新的NI会话提供相机辅助
-        _arConfig.worldAlignment = ARWorldAlignmentGravity;
-        _arConfig.collaborationEnabled = NO;
-        _arConfig.userFaceTrackingEnabled = NO;
-        _arConfig.initialWorldMap = nil;
-    }
-    return _arConfig;
-}
-
-- (ARSession *)arSession {
-    if (!_arSession) {
-        _arSession = [[ARSession alloc] init];
-        _arSession.delegate = self;
-        [_arSession runWithConfiguration:self.arConfig];
-    }
-    return _arSession;
 }
 
 @end

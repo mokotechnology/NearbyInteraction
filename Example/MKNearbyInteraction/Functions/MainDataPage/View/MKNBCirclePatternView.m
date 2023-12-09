@@ -4,8 +4,6 @@
 
 #import "MKNBArrowView.h"
 
-static const CGFloat kCircleSize = 150.0;
-
 @interface MKNBCirclePatternView ()
 
 @property (nonatomic, strong) CAShapeLayer *ringLayer;
