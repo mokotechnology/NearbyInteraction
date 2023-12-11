@@ -23,9 +23,12 @@
 
 #import "MKBLEBaseSDKAdopter.h"
 
+#import "MKNBCommonTools.h"
+
 #import "MKNBCentralManager.h"
 
 #import "MKNBMainDataController.h"
+#import "MKNBAboutController.h"
 
 #import "MKNBAddNearbyView.h"
 
@@ -33,6 +36,8 @@
 @interface MKScanController ()
 
 @property (nonatomic, strong)SDCycleScrollView *scrollView;
+
+@property (nonatomic, strong)UIButton *startButton;
 
 @end
 
@@ -57,6 +62,12 @@
 
 #pragma mark - super method
 - (void)rightButtonMethod {
+    MKNBAboutController *vc = [[MKNBAboutController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - event method
+- (void)startButtonPressed {
     MKNBAddNearbyView *view = [[MKNBAddNearbyView alloc] init];
     [view showViewWithConnectBlock:^(CBPeripheral * _Nonnull peripheral, NSString * _Nonnull deviceName) {
         [self connectPeriperal:peripheral deviceName:deviceName];
@@ -81,15 +92,23 @@
 
 #pragma mark - UI
 - (void)loadSubViews {
+    self.titleLabel.font = [MKNBCommonTools font:20.f];
     self.titleLabel.text = @"Nearby Interaction";
     self.leftButton.hidden = YES;
-    [self.rightButton setTitle:@"Start" forState:UIControlStateNormal];
+    [self.rightButton setImage:LOADIMAGE(@"rightAboutIcon", @"png") forState:UIControlStateNormal];
     [self.view addSubview:self.scrollView];
     [self.scrollView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0.f);
         make.right.mas_equalTo(0.f);
         make.top.mas_equalTo(self.view.mas_safeAreaLayoutGuideTop);
         make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+    }];
+    [self.view addSubview:self.startButton];
+    [self.startButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.width.mas_equalTo(100.f);
+        make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom).mas_offset(-200.f);
+        make.height.mas_equalTo(100.f);
     }];
 }
 
@@ -103,6 +122,22 @@
         _scrollView.currentPageDotColor = [UIColor redColor];
     }
     return _scrollView;
+}
+
+- (UIButton *)startButton {
+    if (!_startButton) {
+        _startButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _startButton.alpha = 0.8;
+        [_startButton setImage:LOADIMAGE(@"startButtonIcon", @"png") forState:UIControlStateNormal];
+        [_startButton setBackgroundColor:RGBCOLOR(201, 210, 216)];
+        [_startButton addTarget:self
+                         action:@selector(startButtonPressed)
+               forControlEvents:UIControlEventTouchUpInside];
+        
+        _startButton.layer.masksToBounds = YES;
+        _startButton.layer.cornerRadius = 50.f;
+    }
+    return _startButton;
 }
 
 - (NSArray *)imageList {
