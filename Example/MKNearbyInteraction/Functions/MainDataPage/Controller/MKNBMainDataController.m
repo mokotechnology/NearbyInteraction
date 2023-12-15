@@ -70,6 +70,8 @@ mk_nb_accessorySharedDataDelegate>
 
 @property (nonatomic, assign)BOOL isConverged;
 
+@property (nonatomic, copy)NSString *errorMsg;
+
 
 
 @property (nonatomic, strong)NISession *session;
@@ -138,6 +140,16 @@ mk_nb_accessorySharedDataDelegate>
     }
     if (convergence.status == NIAlgorithmConvergenceStatusNotConverged) {
         NSLog(@"%@",convergence.reasons);
+        NSArray<NIAlgorithmConvergenceStatusReason>* reasons = [convergence reasons];
+        
+        if ([reasons containsObject:NIAlgorithmConvergenceStatusReasonInsufficientLighting]) {
+            self.errorMsg = @"More light required.";
+        }else if ([reasons containsObject:NIAlgorithmConvergenceStatusReasonInsufficientMovement]) {
+            self.errorMsg = @"More Movement required.";
+        }else {
+            self.errorMsg = @"Try moving in a different direction...";
+        }
+        
         self.isConverged = NO;
         return;
     }
@@ -184,6 +196,7 @@ mk_nb_accessorySharedDataDelegate>
         self.dataView.circleView.hidden = YES;
         self.dataView.arrowView.hidden = YES;
         self.dataView.errorView.hidden = NO;
+        [self.dataView updateErrorMsg:self.errorMsg];
         self.feedbackEnabled = NO;
         self.dataView.distanceValueLabel.hidden = NO;
         self.dataView.distanceValueLabel.text = [NSString stringWithFormat:@"%.1f m",distance];

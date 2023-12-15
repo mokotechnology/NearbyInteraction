@@ -226,6 +226,11 @@ CGFloat const degreeViewHeight = 55.f;
 }
 
 #pragma mark - Public method
+- (void)updateErrorMsg:(NSString *)error {
+    NSString *msg = (ValidStr(error) ? error : @"The signal is weak, please move your phone or device.");
+    self.errorLabel.text = msg;
+}
+
 - (void)updateAzimuth:(NSString *)azimuth elevation:(NSString *)elevation {
     self.azimuthLabel.valueLabel.text = azimuth;
     self.elevationLabel.valueLabel.text = elevation;
@@ -293,7 +298,6 @@ CGFloat const degreeViewHeight = 55.f;
         _errorLabel.textAlignment = NSTextAlignmentCenter;
         _errorLabel.textColor = COLOR_WHITE_MACROS;
         _errorLabel.font = [MKNBCommonTools font:20.f];
-        _errorLabel.text = @"The signal is weak, please move your phone or device.";
         _errorLabel.numberOfLines = 0;
     }
     return _errorLabel;

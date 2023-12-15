@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly)UIButton *closeButton;
 
+- (void)updateErrorMsg:(NSString *)error;
+
 - (void)updateAzimuth:(NSString *)azimuth elevation:(NSString *)elevation;
 
 @end
