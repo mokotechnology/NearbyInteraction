@@ -16,17 +16,156 @@
     "tag": "0.0.1"
   },
   "platforms": {
-    "ios": "15.0"
+    "ios": "16.0"
   },
-  "source_files": "MKNearbyInteraction/Classes/**/*",
   "resource_bundles": {
     "MKNearbyInteraction": [
       "MKNearbyInteraction/Assets/*"
     ]
   },
-  "dependencies": {
-    "MKBaseBleModule": [
+  "subspecs": [
+    {
+      "name": "Target",
+      "source_files": "MKNearbyInteraction/Classes/Target/**",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
 
-    ]
-  }
+        ],
+        "MKNearbyInteraction/Functions": [
+
+        ]
+      }
+    },
+    {
+      "name": "CTMediator",
+      "source_files": "MKNearbyInteraction/Classes/CTMediator/**",
+      "dependencies": {
+        "CTMediator": [
+
+        ],
+        "MKBaseModuleLibrary": [
+
+        ]
+      }
+    },
+    {
+      "name": "Expand",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ]
+      },
+      "subspecs": [
+        {
+          "name": "EmitterLayerView",
+          "source_files": "MKNearbyInteraction/Classes/Expand/EmitterLayerView/**"
+        },
+        {
+          "name": "LoadingLabel",
+          "source_files": "MKNearbyInteraction/Classes/Expand/LoadingLabel/**"
+        },
+        {
+          "name": "WaveView",
+          "source_files": "MKNearbyInteraction/Classes/Expand/WaveView/**"
+        }
+      ]
+    },
+    {
+      "name": "SDK",
+      "source_files": "MKNearbyInteraction/Classes/SDK/**",
+      "dependencies": {
+        "MKBaseBleModule": [
+
+        ]
+      }
+    },
+    {
+      "name": "Functions",
+      "dependencies": {
+        "MKNearbyInteraction/SDK": [
+
+        ],
+        "MKNearbyInteraction/Expand": [
+
+        ],
+        "MKNearbyInteraction/CTMediator": [
+
+        ],
+        "MKBaseModuleLibrary": [
+
+        ],
+        "MKCustomUIModule": [
+
+        ],
+        "MLInputDodger": [
+
+        ],
+        "SDCycleScrollView": [
+          ">= 1.82"
+        ]
+      },
+      "subspecs": [
+        {
+          "name": "AboutPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKNearbyInteraction/Classes/Functions/AboutPage/Controller/**",
+              "dependencies": {
+                "MKNearbyInteraction/Functions/AboutPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKNearbyInteraction/Classes/Functions/AboutPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "MainDataPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKNearbyInteraction/Classes/Functions/MainDataPage/Controller/**",
+              "dependencies": {
+                "MKNearbyInteraction/Functions/MainDataPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKNearbyInteraction/Classes/Functions/MainDataPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "ScanPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKNearbyInteraction/Classes/Functions/ScanPage/Controller/**",
+              "dependencies": {
+                "MKNearbyInteraction/Functions/ScanPage/View": [
+
+                ],
+                "MKNearbyInteraction/Functions/MainDataPage/Controller": [
+
+                ],
+                "MKNearbyInteraction/Functions/AboutPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKNearbyInteraction/Classes/Functions/ScanPage/View/**"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

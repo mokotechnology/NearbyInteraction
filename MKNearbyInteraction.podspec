@@ -28,17 +28,108 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/lovexiaoxia/MKNearbyInteraction.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '15.0'
-
-  s.source_files = 'MKNearbyInteraction/Classes/**/*'
+  s.ios.deployment_target = '16.0'
   
   s.resource_bundles = {
     'MKNearbyInteraction' => ['MKNearbyInteraction/Assets/*']
   }
-
-  s.dependency 'MKBaseBleModule'
   
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.subspec 'Target' do |ss|
+    
+    ss.source_files = 'MKNearbyInteraction/Classes/Target/**'
+    
+    ss.dependency 'MKBaseModuleLibrary'
+    ss.dependency 'MKNearbyInteraction/Functions'
+  
+  end
+  
+  s.subspec 'CTMediator' do |ss|
+    
+    ss.source_files = 'MKNearbyInteraction/Classes/CTMediator/**'
+    
+    ss.dependency 'CTMediator'
+    ss.dependency 'MKBaseModuleLibrary'
+  
+  end
+  
+  s.subspec 'Expand' do |ss|
+    
+    ss.subspec 'EmitterLayerView' do |sss|
+      sss.source_files = 'MKNearbyInteraction/Classes/Expand/EmitterLayerView/**'
+    end
+  
+    ss.subspec 'LoadingLabel' do |sss|
+      sss.source_files = 'MKNearbyInteraction/Classes/Expand/LoadingLabel/**'
+    end
+    
+    ss.subspec 'WaveView' do |sss|
+      sss.source_files = 'MKNearbyInteraction/Classes/Expand/WaveView/**'
+    end
+    
+    ss.dependency 'MKBaseModuleLibrary'
+  
+  end
+  
+  s.subspec 'SDK' do |ss|
+    ss.source_files = 'MKNearbyInteraction/Classes/SDK/**'
+    
+    ss.dependency 'MKBaseBleModule'
+  end
+  
+  s.subspec 'Functions' do |ss|
+    
+    ss.subspec 'AboutPage' do |sss|
+        sss.subspec 'Controller' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/AboutPage/Controller/**'
+          
+          ssss.dependency 'MKNearbyInteraction/Functions/AboutPage/View'
+        end
+        
+        sss.subspec 'View' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/AboutPage/View/**'
+        end
+    end
+    
+    ss.subspec 'MainDataPage' do |sss|
+        sss.subspec 'Controller' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/MainDataPage/Controller/**'
+          
+          ssss.dependency 'MKNearbyInteraction/Functions/MainDataPage/View'
+        end
+        
+        sss.subspec 'View' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/MainDataPage/View/**'
+        end
+    end
+    
+    ss.subspec 'ScanPage' do |sss|
+        sss.subspec 'Controller' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/ScanPage/Controller/**'
+          
+          ssss.dependency 'MKNearbyInteraction/Functions/ScanPage/View'
+          
+          ssss.dependency 'MKNearbyInteraction/Functions/MainDataPage/Controller'
+          ssss.dependency 'MKNearbyInteraction/Functions/AboutPage/Controller'
+        end
+        
+        sss.subspec 'View' do |ssss|
+          ssss.source_files = 'MKNearbyInteraction/Classes/Functions/ScanPage/View/**'
+        end
+    end
+    
+    ss.dependency 'MKNearbyInteraction/SDK'
+    ss.dependency 'MKNearbyInteraction/Expand'
+    ss.dependency 'MKNearbyInteraction/CTMediator'
+  
+    ss.dependency 'MKBaseModuleLibrary'
+    ss.dependency 'MKCustomUIModule'
+    
+    ss.dependency 'MLInputDodger'
+    ss.dependency 'SDCycleScrollView','>= 1.82'
+    ss.dependency 'MLInputDodger'
+#    ss.dependency 'SVGKit'
+#    ss.dependency 'SYNoticeBrowseLabel'
+    
+  end
+
 end

@@ -8,7 +8,7 @@
 
 #import "MKAppDelegate.h"
 
-#import "MKScanController.h"
+#import "MKCJScanController.h"
 
 @interface MKAppDelegate ()
 
@@ -23,7 +23,7 @@
     // Override point for customization after application launch.
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
-    MKScanController *vc = [[MKScanController alloc] init];
+    MKCJScanController *vc = [[MKCJScanController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     _window.rootViewController = nav;
     [_window makeKeyAndVisible];

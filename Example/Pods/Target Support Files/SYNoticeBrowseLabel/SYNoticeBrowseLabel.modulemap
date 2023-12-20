@@ -1,6 +1,0 @@
-framework module SYNoticeBrowseLabel {
-  umbrella header "SYNoticeBrowseLabel-umbrella.h"
-
-  export *
-  module * { export * }
-}
